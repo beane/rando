@@ -48,6 +48,24 @@ router.get('/coins', function(req, res, next) {
   res.send(JSON.stringify(coinFlips));
 });
 
+router.get('/shuffle', function(req, res, next) {
+  var items = req.query.items || [];
+  if(items.length > 50) { res.status(422).send("too many items, dickwad"); return; };
+  var temp = items[0];
+  // how to enforce that items must be an array?
+
+  for(var i=0, n=items.length; i<n; i++) {
+    // j is an index where i <= j < n.
+    // basically, it's any index between
+    // itself and the end of the array
+    var j = Math.floor(Math.random() * (n-i)) + i;
+    temp = items[i];
+    items[i] = items[j];
+    items[j] = temp;
+  }
+  res.json(items);
+});
+
 router.post('/odds', function(req, res, next) {
   res.json("never tell me the odds")
 });
