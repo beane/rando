@@ -48,6 +48,12 @@ router.get('/coins', function(req, res, next) {
   res.send(JSON.stringify(coinFlips));
 });
 
+/*
+ * query params:
+ *  items - the list number of items to be shuffled
+ *    max length 50
+ * returns the original array shuffled
+ */
 router.get('/shuffle', function(req, res, next) {
   var items = req.query.items || [];
   if(items.length > 50) { res.status(422).send("too many items, dickwad"); return; };
