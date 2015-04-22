@@ -48,4 +48,9 @@ router.get('/coins', function(req, res, next) {
   res.send(JSON.stringify(coinFlips));
 });
 
+router.post('/odds', function(req, res, next) {
+  res.json("never tell me the odds")
+});
+
 module.exports = router;
+
