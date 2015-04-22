@@ -21,11 +21,31 @@ router.get('/dice', function(req, res, next) {
   if (dieSize <  2) { res.status(422).send("dice too damn small, dickwad"); return; };
   if (dieSize > 50) { res.status(422).send("dice too damn big, dickwad"); return; };
 
-  var diceRolls = []
+  var diceRolls = [];
   for(var i=0; i<numDice; i++) {
     diceRolls.push(Math.floor((Math.random() * dieSize)) + 1);
   }
   res.send(JSON.stringify(diceRolls));
+});
+
+/*
+ * optional query params:
+ *  count - the number of coins to be tossed
+ *    min 1 (default)
+ *    max 50
+ * returns an array of 1s and 0s
+ */
+router.get('/coins', function(req, res, next) {
+  var numCoins = +req.query.count || 1;
+
+  if (numCoins > 50) { res.status(422).send("too many coins, dickwad"); return; };
+  if (numCoins <= 0) { res.status(422).send("too few coins, dickwad"); return; };
+
+  var coinFlips = [];
+  for(var i=0; i<numCoins; i++) {
+    coinFlips.push(Math.floor((Math.random() * 2)));
+  }
+  res.send(JSON.stringify(coinFlips));
 });
 
 module.exports = router;
